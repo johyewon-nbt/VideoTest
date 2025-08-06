@@ -40,7 +40,7 @@ object VideoTestData {
         ),
         VideoInfo(
             "avi",
-            "https://filesamples.com/samples/video/avi/sample_640x360.avi",
+            "https://file-examples.com/wp-content/uploads/2018/04/file_example_AVI_480_750kB.avi",
             expected = false,
             expectedReason = "DivX/Xvid, MPEG-4 ASP 코덱 미지원"
         ),

@@ -1,5 +1,6 @@
 package com.example.videotest
 
+import android.annotation.SuppressLint
 import android.media.MediaCodec
 import android.media.MediaExtractor
 import android.media.MediaFormat
@@ -75,6 +76,7 @@ class RemuxActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("WrongConstant")
     private fun tryRemux(url: String, ext: String): String {
         if (ext.equals("mp4", ignoreCase = true)) {
             return "mp4는 래핑 불필요"
@@ -130,7 +132,7 @@ class RemuxActivity : AppCompatActivity() {
                     if (bufferInfo.size < 0) break
 
                     bufferInfo.presentationTimeUs = extractor.sampleTime
-                    bufferInfo.flags = MediaCodec.BUFFER_FLAG_CODEC_CONFIG
+                    bufferInfo.flags = extractor.sampleFlags
                     muxer.writeSampleData(trackIndexMap[trackIndex]!!, buffer, bufferInfo)
                     extractor.advance()
                 }
