@@ -29,37 +29,45 @@ class MediaPlayerTestActivity : AppCompatActivity() {
 
         Thread {
             for (video in VideoTestData.testVideos) {
-                logWithTime("----- [${video.extension.uppercase()}] 테스트 시작 -----")
 
                 // 1. 네트워크 연결 확인
                 val reachable = checkUrlReachable(video.url)
                 if (!reachable) {
-                    logWithTime("[ERROR] [${video.extension.uppercase()}] URL에 접근 불가 → 테스트 스킵")
+                    runOnUiThread {
+                        binding.textViewResults.append("[ERROR] [${video.extension.uppercase()}] URL에 접근 불가 → 테스트 스킵\n")
+                    }
                     continue
                 }
 
                 // 2. MediaPlayer 준비
                 try {
+
                     val mp = MediaPlayer()
                     mp.setDataSource(this, Uri.parse(video.url))
                     mp.setOnPreparedListener {
-                        logWithTime("[SUCCESS] [${video.extension.uppercase()}] 실제 재생 준비 완료 → 재생 가능")
+                        runOnUiThread {
+                            binding.textViewResults.append("[SUCCESS] [${video.extension.uppercase()}] 실제 재생 준비 완료 → 재생 가능\n")
+                        }
                         mp.start()
                     }
                     mp.setOnErrorListener { _, what, extra ->
-                        logWithTime("[FAIL] [${video.extension.uppercase()}] 재생 불가 / what=$what, extra=$extra")
-                        logWithTime("----- [${video.extension.uppercase()}] 테스트 종료 -----")
+                        runOnUiThread {
+                            binding.textViewResults.append("[FAIL] [${video.extension.uppercase()}] 재생 불가 / what=$what, extra=${video.expectedReason} \n")
+                        }
                         mp.release()
                         true
                     }
                     mp.setOnCompletionListener {
-                        logWithTime("[INFO] [${video.extension.uppercase()}] 재생 완료")
-                        logWithTime("----- [${video.extension.uppercase()}] 테스트 종료 -----")
+                        runOnUiThread {
+                            binding.textViewResults.append("[INFO] [${video.extension.uppercase()}] 재생 완료\n")
+                        }
                         mp.release()
                     }
                     mp.prepareAsync()
                 } catch (e: Exception) {
-                    logWithTime("[ERROR] [${video.extension.uppercase()}] 예외 발생: ${e.message}")
+                    runOnUiThread {
+                        binding.textViewResults.append("[ERROR] [${video.extension.uppercase()}] 예외 발생: ${e.message}\n")
+                    }
                 }
             }
         }.start()

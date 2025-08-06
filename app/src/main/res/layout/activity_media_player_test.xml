@@ -5,7 +5,7 @@
 
     <!-- MediaPlayer는 UI 없이 로그만 출력 -->
     <TextView
+        android:id="@+id/text_view_results"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MediaPlayer 테스트 진행 중... 로그를 확인하세요" />
+        android:layout_height="wrap_content"/>
 </LinearLayout>
