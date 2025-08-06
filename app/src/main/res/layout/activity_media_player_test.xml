@@ -1,0 +1,11 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center" android:padding="16dp">
+
+    <!-- MediaPlayer는 UI 없이 로그만 출력 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MediaPlayer 테스트 진행 중... 로그를 확인하세요" />
+</LinearLayout>
